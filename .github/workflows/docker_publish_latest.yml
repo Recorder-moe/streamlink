@@ -30,10 +30,9 @@ jobs:
         id: setup
         uses: ./.github/workflows/docker-reused-setup-steps
         with:
+          DOCKERHUB_ORGANIZATION_NAME : ${{ secrets.DOCKERHUB_ORGANIZATION_NAME }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-          QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
-          QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
           tag: latest
 
       - name: Build and push
@@ -65,11 +64,5 @@ jobs:
       - name: Attest Docker Hub image
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/streamlink
-          subject-digest: ${{ steps.build_push_latest.outputs.digest }}
-
-      - name: Attest Quay image
-        uses: actions/attest-build-provenance@v2
-        with:
-          subject-name: quay.io/${{ github.repository_owner }}/streamlink
+          subject-name: index.docker.io/${{ secrets.DOCKERHUB_ORGANIZATION_NAME }}/streamlink
           subject-digest: ${{ steps.build_push_latest.outputs.digest }}
