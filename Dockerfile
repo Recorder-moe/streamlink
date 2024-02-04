@@ -41,8 +41,9 @@ RUN --mount=type=cache,id=apk-$TARGETARCH$TARGETVARIANT,sharing=locked,target=/v
     cp /ffprobe /usr/bin/ && \
     cp /dumb-init /usr/bin/
 
-# Remove these to prevent the container from executing arbitrary commands
-RUN rm /bin/echo /bin/ln /bin/rm /bin/sh
+# Recorder.moe edit: Preserve these as we will need to mv the files after recording.
+# # Remove these to prevent the container from executing arbitrary commands
+# RUN rm /bin/echo /bin/ln /bin/rm /bin/sh
 
 WORKDIR /download
 
