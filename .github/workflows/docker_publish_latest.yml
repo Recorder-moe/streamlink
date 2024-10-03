@@ -5,7 +5,7 @@ on:
     branches:
       - "master"
   schedule:
-    - cron: "0 4 * * 1" # every monday at 4am UTC
+    - cron: "0 5 * * 1" # every monday at 5am UTC
 
   workflow_dispatch:
 
@@ -24,13 +24,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: 'true'
+          submodules: "true"
 
       - name: Setup docker
         id: setup
         uses: ./.github/workflows/docker-reused-setup-steps
         with:
-          DOCKERHUB_ORGANIZATION_NAME : ${{ secrets.DOCKERHUB_ORGANIZATION_NAME }}
+          DOCKERHUB_ORGANIZATION_NAME: ${{ secrets.DOCKERHUB_ORGANIZATION_NAME }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
           tag: latest
@@ -50,8 +50,7 @@ jobs:
             RELEASE=${{ github.run_number }}
           platforms: linux/amd64,linux/arm64
           # Cache to regietry instead of gha to avoid the capacity limit.
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/streamlink:cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/streamlink:cache,mode=max
+          cache-from: type=registry,ref=ghcr.io/jim60105/streamlink:cache
           sbom: true
           provenance: true
 
